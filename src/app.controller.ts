@@ -1,8 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
-import { IssueDto } from './dto/issue.dto';
+import { Moscow } from './enum/moscow.enum';
 import { IssueService } from './services/issue.service';
 
 @Controller()
@@ -16,7 +14,16 @@ export class AppController {
 
   @Get('issues')
   getIssues() {
-    console.log('HERE');
     return this.issueService.getIssues();
+  }
+
+  @Post('/issues/:number')
+  addLabelsToIssue(@Param('number') issueNumber: number, @Body() body: {label: Moscow}) {
+    return this.issueService.addLabel(issueNumber, body);
+  }
+
+  @Delete('/issues/:number/:label')
+  removeLabelToIssue(@Param('number') issueNumber: number, @Param('label') label: string) {
+    return this.issueService.removeLabel(issueNumber, label);
   }
 }
