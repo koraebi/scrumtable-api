@@ -1,6 +1,6 @@
 export enum Moscow {
-    MUST = "must",
-    SHOULD = "should",
-    COULD = "could",
-    WONT = "won't"
+    MUST = "Must",
+    SHOULD = "Should",
+    COULD = "Could",
+    WONT = "Won't"
 }
