@@ -5,7 +5,10 @@ import { IssueService } from './services/issue.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private issueService: IssueService) { }
+  constructor(
+    private readonly appService: AppService,
+    private issueService: IssueService,
+  ) {}
 
   @Get()
   getHello(): string {
