@@ -22,10 +22,12 @@ export class AppController {
 
   @Post('/issues/:number')
   addLabelsToIssue(@Param('number') issueNumber: number, @Body() body: {label: Moscow}) {
-    if (typeof body.label === 'string') {
-      body.label = Moscow[body.label.toUpperCase()];
-    }
     return this.issueService.addLabel(issueNumber, body);
+  }
+
+  @Post('/issues/:number/:label')
+  addLabelToIssue(@Param('number') issueNumber: number, @Param('label') label: string) {
+    return this.issueService.addLabel(issueNumber, { label: Moscow[label] });
   }
 
   @Delete('/issues/:number/:label')
