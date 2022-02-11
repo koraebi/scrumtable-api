@@ -35,11 +35,13 @@ export class EventsGateway
   @SubscribeMessage('msgToWeb')
   handleMobileMessage(client: Socket, payload: string): void {
     this.server.emit('msgFromMobile', payload);
+    this.logger.log('Socket from mobile' + client.id);
   }
 
   @SubscribeMessage('msgToMobile')
   handleWebMessage(client: Socket, payload: string): void {
     this.server.emit('msgFromWeb', payload);
+    this.logger.log('Socket from web' + client.id);
   }
 
   afterInit(server: Server) {
