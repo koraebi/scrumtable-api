@@ -1,8 +1,9 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
+import { Console } from 'console';
 import { map, Observable } from 'rxjs';
-import { IssueDto } from 'src/dto/issue.dto';
+import { Assignee, IssueDto } from 'src/dto/issue.dto';
 import { Moscow } from 'src/enum/moscow.enum';
 
 @Injectable()
@@ -42,6 +43,8 @@ export class IssueService {
             description: value.body,
             number: value.number,
             selected: false,
+            assignee: value.assignee,
+            assignees: value.assignees,
             moscow: this.getMosowFromLabels(value.labels),
           };
         }),
