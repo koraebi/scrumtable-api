@@ -22,16 +22,14 @@ export class EventsGateway
   server: Server;
   private logger: Logger = new Logger('EventsGateway');
 
-  @SubscribeMessage('msgToWeb')
+  @SubscribeMessage('updateWebIssues')
   handleMobileMessage(client: Socket, payload: string): void {
-    this.server.emit('msgFromMobile', payload);
-    this.logger.log('Socket from mobile: ' + client.id);
+    this.server.emit('updateWebIssues', payload);
   }
 
-  @SubscribeMessage('msgToMobile')
+  @SubscribeMessage('updateMobileIssues')
   handleWebMessage(client: Socket, payload: string): void {
-    this.server.emit('msgFromWeb', payload);
-    this.logger.log('Socket from web: ' + client.id);
+    this.server.emit('updateMobileIssues', payload);
   }
 
   afterInit(server: Server) {
