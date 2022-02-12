@@ -1,15 +1,12 @@
 import {
-  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+
 import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
 
@@ -25,23 +22,40 @@ export class EventsGateway
   server: Server;
   private logger: Logger = new Logger('EventsGateway');
 
-  /* @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    return from([1, 2, 3]).pipe(
-      map((item) => ({ event: 'events', data: item })),
-    );
-  }*/
-
-  @SubscribeMessage('msgToWeb')
-  handleMobileMessage(client: Socket, payload: string): void {
-    this.server.emit('msgFromMobile', payload);
-    this.logger.log('Socket from mobile' + client.id);
+  @SubscribeMessage('updateWebIssues')
+  updateWebIssues(client: Socket, payload: string): void {
+    this.server.emit('updateWebIssues', payload);
+    this.logger.log('Socket message: updateWebIssues');
   }
 
-  @SubscribeMessage('msgToMobile')
-  handleWebMessage(client: Socket, payload: string): void {
-    this.server.emit('msgFromWeb', payload);
-    this.logger.log('Socket from web' + client.id);
+  @SubscribeMessage('updateMobileIssues')
+  updateMobileIssues(client: Socket, payload: string): void {
+    this.server.emit('updateMobileIssues', payload);
+    this.logger.log('Socket message: updateMobileIssues');
+  }
+
+  @SubscribeMessage('lockMobileIssue')
+  lockMobileIssue(client: Socket, payload: string): void {
+    this.server.emit('lockMobileIssue', payload);
+    this.logger.log('Socket message: lockMobileIssue');
+  }
+
+  @SubscribeMessage('unlockMobileIssue')
+  unlockMobileIssue(client: Socket, payload: string): void {
+    this.server.emit('unlockMobileIssue', payload);
+    this.logger.log('Socket message: unlockMobileIssue');
+  }
+
+  @SubscribeMessage('lockWebIssue')
+  lockWebIssue(client: Socket, payload: string): void {
+    this.server.emit('lockWebIssue', payload);
+    this.logger.log('Socket message: lockWebIssue');
+  }
+
+  @SubscribeMessage('unlockWebIssue')
+  unlockWebIssue(client: Socket, payload: string): void {
+    this.server.emit('unlockWebIssue', payload);
+    this.logger.log('Socket message: unlockWebIssue');
   }
 
   afterInit(server: Server) {
@@ -55,10 +69,4 @@ export class EventsGateway
   handleConnection(client: Socket, ...args: any[]) {
     this.logger.log('Client connected: ' + client.id);
   }
-
-  /* @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    console.log(data);
-    return data;
-  } */
 }
