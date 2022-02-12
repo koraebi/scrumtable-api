@@ -25,31 +25,37 @@ export class EventsGateway
   @SubscribeMessage('updateWebIssues')
   updateWebIssues(client: Socket, payload: string): void {
     this.server.emit('updateWebIssues', payload);
+    this.logger.log('Socket message: updateWebIssues');
   }
 
   @SubscribeMessage('updateMobileIssues')
   updateMobileIssues(client: Socket, payload: string): void {
     this.server.emit('updateMobileIssues', payload);
+    this.logger.log('Socket message: updateMobileIssues');
   }
 
   @SubscribeMessage('lockMobileIssue')
   lockMobileIssue(client: Socket, payload: string): void {
     this.server.emit('lockMobileIssue', payload);
+    this.logger.log('Socket message: lockMobileIssue');
   }
 
   @SubscribeMessage('unlockMobileIssue')
   unlockMobileIssue(client: Socket, payload: string): void {
     this.server.emit('unlockMobileIssue', payload);
+    this.logger.log('Socket message: unlockMobileIssue');
   }
 
   @SubscribeMessage('lockWebIssue')
   lockWebIssue(client: Socket, payload: string): void {
     this.server.emit('lockWebIssue', payload);
+    this.logger.log('Socket message: lockWebIssue');
   }
 
   @SubscribeMessage('unlockWebIssue')
   unlockWebIssue(client: Socket, payload: string): void {
     this.server.emit('unlockWebIssue', payload);
+    this.logger.log('Socket message: unlockWebIssue');
   }
 
   afterInit(server: Server) {
