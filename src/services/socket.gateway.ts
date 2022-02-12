@@ -32,6 +32,26 @@ export class EventsGateway
     this.server.emit('updateMobileIssues', payload);
   }
 
+  @SubscribeMessage('lockMobileIssue')
+  handleWebMessage(client: Socket, payload: string): void {
+    this.server.emit('lockMobileIssue', payload);
+  }
+
+  @SubscribeMessage('unlockMobileIssue')
+  handleWebMessage(client: Socket, payload: string): void {
+    this.server.emit('unlockMobileIssue', payload);
+  }
+
+  @SubscribeMessage('lockWebIssue')
+  handleWebMessage(client: Socket, payload: string): void {
+    this.server.emit('lockWebIssue', payload);
+  }
+
+  @SubscribeMessage('unlockWebIssue')
+  handleWebMessage(client: Socket, payload: string): void {
+    this.server.emit('unlockWebIssue', payload);
+  }
+
   afterInit(server: Server) {
     this.logger.log('Init');
   }
