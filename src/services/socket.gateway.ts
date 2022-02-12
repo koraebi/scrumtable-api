@@ -23,32 +23,32 @@ export class EventsGateway
   private logger: Logger = new Logger('EventsGateway');
 
   @SubscribeMessage('updateWebIssues')
-  handleMobileMessage(client: Socket, payload: string): void {
+  updateWebIssues(client: Socket, payload: string): void {
     this.server.emit('updateWebIssues', payload);
   }
 
   @SubscribeMessage('updateMobileIssues')
-  handleWebMessage(client: Socket, payload: string): void {
+  updateMobileIssues(client: Socket, payload: string): void {
     this.server.emit('updateMobileIssues', payload);
   }
 
   @SubscribeMessage('lockMobileIssue')
-  handleWebMessage(client: Socket, payload: string): void {
+  lockMobileIssue(client: Socket, payload: string): void {
     this.server.emit('lockMobileIssue', payload);
   }
 
   @SubscribeMessage('unlockMobileIssue')
-  handleWebMessage(client: Socket, payload: string): void {
+  unlockMobileIssue(client: Socket, payload: string): void {
     this.server.emit('unlockMobileIssue', payload);
   }
 
   @SubscribeMessage('lockWebIssue')
-  handleWebMessage(client: Socket, payload: string): void {
+  lockWebIssue(client: Socket, payload: string): void {
     this.server.emit('lockWebIssue', payload);
   }
 
   @SubscribeMessage('unlockWebIssue')
-  handleWebMessage(client: Socket, payload: string): void {
+  unlockWebIssue(client: Socket, payload: string): void {
     this.server.emit('unlockWebIssue', payload);
   }
 
