@@ -28,10 +28,16 @@ export class EventsGateway
     this.logger.log('Socket message: updateWebIssues');
   }
 
-  @SubscribeMessage('updateMobileIssues')
-  updateMobileIssues(client: Socket, payload: string): void {
-    this.server.emit('updateMobileIssues', payload);
-    this.logger.log('Socket message: updateMobileIssues');
+  @SubscribeMessage('selectIssue')
+  selectIssue(client: Socket, payload: string): void {
+    this.server.emit('selectIssue', payload);
+    this.logger.log('Socket message: selectIssue');
+  }
+
+  @SubscribeMessage('unselectIssue')
+  unselectIssue(client: Socket, payload: string): void {
+    this.server.emit('unselectIssue', payload);
+    this.logger.log('Socket message: unselectIssue');
   }
 
   @SubscribeMessage('updateTabletIssues')
