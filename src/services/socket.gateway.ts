@@ -52,7 +52,7 @@ export class EventsGateway
     this.logger.log('Socket message: lockTabletIssue');
   }
 
-  @SubscribeMessage('unlockMobileIssue')
+  @SubscribeMessage('unlockTabletIssue')
   unlockMobileIssue(client: Socket, payload: string): void {
     this.server.emit('unlockTabletIssue', payload);
     this.logger.log('Socket message: unlockTabletIssue');
