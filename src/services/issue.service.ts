@@ -1,9 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
-import { Console } from 'console';
 import { map, Observable } from 'rxjs';
-import { Assignee, IssueDto } from 'src/dto/issue.dto';
+import { IssueDto } from 'src/dto/issue.dto';
 import { Moscow } from 'src/enum/moscow.enum';
 
 @Injectable()
@@ -35,21 +33,26 @@ export class IssueService {
   }
 
   getIssues(): Observable<IssueDto[]> {
-    return this.httpService.get(this.API_URL, this.CONFIG).pipe(
-      map((response) =>
-        (response.data as any[]).map((value) => {
-          return {
-            name: value.title,
-            description: value.body,
-            number: value.number,
-            selected: false,
-            assignee: value.assignee,
-            assignees: value.assignees,
-            moscow: this.getMosowFromLabels(value.labels),
-          };
-        }),
-      ),
-    );
+    return this.httpService
+      .get(this.API_URL, {
+        headers: this.CONFIG.headers,
+        params: { per_page: 100 },
+      })
+      .pipe(
+        map((response) =>
+          (response.data as any[]).map((value) => {
+            return {
+              name: value.title,
+              description: value.body,
+              number: value.number,
+              selected: false,
+              assignee: value.assignee,
+              assignees: value.assignees,
+              moscow: this.getMosowFromLabels(value.labels),
+            };
+          }),
+        ),
+      );
   }
 
   addLabel(
