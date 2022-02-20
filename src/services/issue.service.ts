@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { IssueDto } from 'src/dto/issue.dto';
+import { IssueDto, Labels } from 'src/dto/issue.dto';
 import { Moscow } from 'src/enum/moscow.enum';
 
 @Injectable()
@@ -32,6 +32,18 @@ export class IssueService {
     return undefined;
   }
 
+  private getOtherLabels(labels: any[]): Labels[] | undefined {
+    if (labels.length === 0) return undefined;
+    labels = labels.filter(
+      (label) =>
+        label.name !== 'Must' &&
+        label.name != 'Could' &&
+        label.name != 'Should' &&
+        label.name != "Won't",
+    );
+    if (labels.length === 0) return undefined;
+    return labels;
+  }
   getIssues(): Observable<IssueDto[]> {
     return this.httpService
       .get(this.API_URL, {
@@ -44,11 +56,13 @@ export class IssueService {
             return {
               name: value.title,
               description: value.body,
+              state: value.state,
               number: value.number,
               selected: false,
               assignee: value.assignee,
               assignees: value.assignees,
               moscow: this.getMosowFromLabels(value.labels),
+              labels: this.getOtherLabels(value.labels),
             };
           }),
         ),
