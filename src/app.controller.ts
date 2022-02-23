@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/
 import { AppService } from './app.service';
 import { Moscow } from './enum/moscow.enum';
 import { IssueService } from './services/issue.service';
+import { Logger } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -33,5 +34,10 @@ export class AppController {
   @Delete('/issues/:number/:label')
   removeLabelToIssue(@Param('number') issueNumber: number, @Param('label') label: string) {
     return this.issueService.removeLabel(issueNumber, label);
+  }
+
+  @Post('/webhook')
+  listenGithubWebhook(@Body() body) {
+    Logger.log(body);
   }
 }
