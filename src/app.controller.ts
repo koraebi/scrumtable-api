@@ -3,6 +3,9 @@ import { AppService } from './app.service';
 import { Moscow } from './enum/moscow.enum';
 import { IssueService } from './services/issue.service';
 import { Logger } from '@nestjs/common';
+import { EventsGateway } from "./services/socket.gateway";
+import { WebSocketServer } from "@nestjs/websockets";
+import { Server } from "socket.io";
 
 @Controller()
 export class AppController {
@@ -10,6 +13,9 @@ export class AppController {
     private readonly appService: AppService,
     private issueService: IssueService,
   ) {}
+
+  @WebSocketServer()
+  server: Server;
 
   @Get()
   getHello(): string {
@@ -39,5 +45,6 @@ export class AppController {
   @Post('/webhook')
   listenGithubWebhook(@Body() body) {
     Logger.log(body);
+    this.server.emit("updateTabletIssues", body);
   }
 }
