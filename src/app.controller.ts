@@ -30,11 +30,6 @@ export class AppController {
     return this.issueService.addLabel(issueNumber, body);
   }
 
-  @Post('/issues/:number/:label')
-  addLabelToIssue(@Param('number') issueNumber: number, @Param('label') label: string) {
-    return this.issueService.addLabel(issueNumber, { label: Moscow[label] });
-  }
-
   @Delete('/issues/:number/:label')
   removeLabelToIssue(@Param('number') issueNumber: number, @Param('label') label: string) {
     return this.issueService.removeLabel(issueNumber, label);

@@ -60,7 +60,7 @@ export class IssueService {
     label: { label: Moscow },
   ): Observable<string[]> {
     return this.httpService
-      .post(
+      .put(
         this.API_URL + '/' + issueNumber + '/labels',
         { labels: [label.label] },
         this.CONFIG,
