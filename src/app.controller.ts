@@ -1,3 +1,4 @@
+import { EventsGateway } from './services/socket.gateway';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Moscow } from './enum/moscow.enum';
@@ -11,10 +12,8 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private issueService: IssueService,
+    private readonly socket: EventsGateway
   ) {}
-
-  @WebSocketServer()
-  server: Server;
 
   @Get()
   getHello(): string {
@@ -44,6 +43,6 @@ export class AppController {
   @Post('/webhook')
   listenGithubWebhook(@Body() body) {
     Logger.log(body);
-    this.server.emit('updateIssue', body);
+    this.socket.server.emit('updateIssue', body);
   }
 }
