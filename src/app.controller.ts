@@ -42,7 +42,7 @@ export class AppController {
 
   @Post('/webhook')
   listenGithubWebhook(@Body() body) {
-    Logger.log(body);
     this.socket.server.emit('updateIssue', body);
+    Logger.log('Webhook message: ' + body);
   }
 }
