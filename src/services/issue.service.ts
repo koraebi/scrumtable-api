@@ -60,24 +60,9 @@ export class IssueService {
     label: { label: Moscow },
   ): Observable<string[]> {
     return this.httpService
-      .post(
+      .put(
         this.API_URL + '/' + issueNumber + '/labels',
         { labels: [label.label] },
-        this.CONFIG,
-      )
-      .pipe(
-        map((response) =>
-          (response.data as any[]).map((value) => {
-            return value.name as string;
-          }),
-        ),
-      );
-  }
-
-  removeLabel(issueNumber: number, label: string): Observable<string[]> {
-    return this.httpService
-      .delete(
-        this.API_URL + '/' + issueNumber + '/labels/' + label,
         this.CONFIG,
       )
       .pipe(

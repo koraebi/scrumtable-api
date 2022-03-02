@@ -30,14 +30,11 @@ export class AppController {
     return this.issueService.addLabel(issueNumber, body);
   }
 
-  @Delete('/issues/:number/:label')
-  removeLabelToIssue(@Param('number') issueNumber: number, @Param('label') label: string) {
-    return this.issueService.removeLabel(issueNumber, label);
-  }
-
   @Post('/webhook')
   listenGithubWebhook(@Body() body) {
-    this.socket.server.emit('updateIssue', body);
-    Logger.log('Webhook : action=' + body.action + ", issue=" + body.issue.number);
+    if (body.action === 'labeled') {
+      this.socket.server.emit('updateIssue', body.issue);
+      Logger.log('Webhook: Label \"' + body.issue.label + '\" set for issue #' + body.issue.number);
+    }
   }
 }
