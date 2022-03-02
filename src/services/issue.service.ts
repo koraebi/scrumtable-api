@@ -26,6 +26,8 @@ export class IssueService {
           return Moscow.COULD;
         case Moscow.WONT:
           return Moscow.WONT;
+        case Moscow.TODO:
+          return Moscow.TODO;
       }
     }
 
