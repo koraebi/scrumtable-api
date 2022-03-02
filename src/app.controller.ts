@@ -33,8 +33,8 @@ export class AppController {
   @Post('/webhook')
   listenGithubWebhook(@Body() body) {
     if (body.action === 'labeled') {
-      this.socket.server.emit('updateIssue', body.issue);
-      Logger.log('Webhook: Label \"' + body.issue.label + '\" set for issue #' + body.issue.number);
+      this.socket.server.emit('updateIssue', { issue: body.issue.number, label: body.label.name });
+      Logger.log('Webhook: Label \"' + body.label.name + '\" set for issue #' + body.issue.number);
     }
   }
 }
